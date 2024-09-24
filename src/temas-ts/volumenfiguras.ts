@@ -1,26 +1,46 @@
-import { CalcularAreas } from './areasfiguras'; 
+
+import { CalcularAreas } from './areasfiguras';
 
 class CalcularVolumenes extends CalcularAreas {
-    VolPrisma(base: number, altura: number, profundidad: number): number {
-        const ABase = this.APrisma(base, altura);
-        return ABase * profundidad; 
+    private profundidad: number;
+
+    constructor(base: number, altura: number, radio: number, profundidad: number) {
+        super(base, altura, radio);
+        this.profundidad = profundidad;
     }
 
-    
-    VolPiramide(base: number, altura: number, profundidad: number): number {
-        const ABase = this.APiramide(base, altura);
-        return (ABase * profundidad) / 3; 
+    VolPrisma(areaBase: number): number {
+        return areaBase * this.profundidad;
     }
 
-    
-    VolCilindro(radio: number, altura: number): number {
-        const ABase = 3.1416 * Math.pow(radio, 2); 
-        return ABase * altura; 
+    VolPiramide(areaBase: number): number {
+        return (areaBase * this.profundidad) / 3;
+    }
+
+    VolCilindro(areaBase: number, altura: number): number {
+        return areaBase * altura;
+    }
+
+    imprimirVolumenes(): void {
+        const areas = this.imprimirAreas();
+
+        const volumenPrisma = this.VolPrisma(areas.APrisma);
+        console.log(`Volumen del Prisma: ${volumenPrisma}`);
+
+        const volumenPiramide = this.VolPiramide(areas.APiramide);
+        console.log(`Volumen de la Pirámide: ${volumenPiramide}`);
+
+        const volumenCilindro = this.VolCilindro(Math.PI * Math.pow(15, 2), 27);
+        console.log(`Volumen del Cilindro: ${volumenCilindro}`);
     }
 }
 
-const volumen = new CalcularVolumenes();
+const volumen = new CalcularVolumenes(22, 25, 15, 28);
+volumen.imprimirVolumenes();
 
-console.log("1 Volumen prisma: ", volumen.VolPrisma(22, 25, 28));
-console.log("2 Volumen piramide: ", volumen.VolPiramide(14, 17, 20));
-console.log("3 Volumen cilindro: ", volumen.VolCilindro(15, 27));
+
+
+
+
+const areas = new CalcularAreas(22, 25, 15);
+areas.imprimirAreas();
